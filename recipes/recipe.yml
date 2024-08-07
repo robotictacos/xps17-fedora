@@ -4,7 +4,7 @@ name: xps17-fedora
 description: Personal Laptop ISO
 
 # the base image to build on top of (FROM) and the version tag to use
-base-image: ghcr.io/ublue-os/bazzite-gnome-nvidia:stable
+base-image: ghcr.io/ublue-os/bazzite-gnome-nvidia
 image-version: latest # latest is also supported if you want new updates ASAP
 
 # module configuration, executed in order
@@ -20,19 +20,15 @@ modules:
 
   - type: rpm-ostree
     repos:
-       - https://downloads.1password.com/linux/rpm/stable/x86_64
        - https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-%OS_VERSION%.noarch.rpm
        - https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-%OS_VERSION%.noarch.rpm
        - https://copr.fedorainfracloud.org/coprs/atim/starship/repo/fedora-%OS_VERSION%/atim-starship-fedora-%OS_VERSION%.repo
-    keys:
-       - https://downloads.1password.com/linux/keys/1password.asc
     install:
       # command line utilities
       - fish
       - starship
       - tldr
       - btop
-      - akmod-nvidia
       - bolt
       - mesa-vulkan-drivers
       - mesa-libGL
@@ -51,18 +47,26 @@ modules:
       - guestfs-tools
       - python3-libguestfs
       - virt-top
+      - swtpm
       #***********
       - profile-sync-daemon
       - samba
-      - 1password #TODO figure out how to add repo and key
       - freerdp
       - irqbalance
-      - pipewire
     remove:
-      # example: removing firefox (in favor of the flatpak)
-      # "firefox" is the main package, "firefox-langpacks" is a dependency
-      # - firefox
-      # - firefox-langpacks # also remove firefox dependency (not required for all packages, this is a special case)
+      - rom-properties
+      - wallpaper-engine-kde-plugin
+      - steamdeck-dsp
+      - steamdeck-gnome-presets
+      - steamdeck-kde-presets-desktop
+      - steam_notif_daemon
+      - jupiter-fan-control
+      - jupiter-hw-support-btrfs
+      - jupiter-sd-mounting-btrfs
+      - extest
+      - ryzenadj
+      - sdgyrodsu
+
 
   - type: default-flatpaks
     notify: true # Send notification after install/uninstall is finished (true/false)
@@ -70,7 +74,7 @@ modules:
       # If no repo information is specified, Flathub will be used by default
       # repo-url: https://dl.flathub.org/repo/flathub.flatpakrepo
       # repo-name: flathub
-      # repo-title: "Flathub (system-wide)" # Optional; this sets the remote's user-facing name in graphical frontends like GNOME Software
+      repo-title: "Flathub (system-wide)" # Optional; this sets the remote's user-facing name in graphical frontends like GNOME Software
       install:
         - com.github.IsmaelMartinez.teams_for_linux
         - com.visualstudio.code
@@ -78,8 +82,11 @@ modules:
         - org.remmina.Remmina
         - sh.cider.Cider
         - io.github.dvlv.boxbuddyrs #box buddy
-      remove:
-      # - org.gnome.eog
+        - org.freedesktop.Platform.ffmpeg-full
+        - app/io.podman_desktop.PodmanDesktop/x86_64/stable
+        - app/org.videolan.VLC/x86_64/stable
+      # remove:
+      # # - org.gnome.eog
 
   - type: signing # this sets up the proper policy & signing files for signed images to work fully
 
@@ -111,14 +118,32 @@ modules:
   - type: akmods
     base: asus # if not specified, classic "main" base is used by default
     install:
-      - nvidia
+      - openrazer
       - openrgb
-      - v4l2loopback
       - winesync
+      - xpadneo
+      - xone
 
   - type: bling
     install:
-    - ublue-update # https://github.com/ublue-os/ublue-update
     - 1password # install 1Password (stable) and `op` CLI tool
     - dconf-update-service # a service unit that updates the dconf db on boot
     - gnome-vrr # enables gnome-vrr for your image
+
+  - type: gnome-extensions
+    install:
+      - Blur my Shell
+      - AppIndicator and KStatusNotifierItem Support
+      - Bluetooth Quick Connect
+      - Dash to Dock 
+      - Forge 
+      - Just Perfection
+      - Space Bar 
+      - System Monitor
+      - User Themes
+    uninstall:
+      - GSConnect # Uninstall step here should be used only for the extensions
+      - gnome-shell-extension-caribou-blocker
+      - gnome-shell-extension-compiz-windows-effect
+      - gnome-shell-extension-hanabi
+      - gnome-shell-extension-hotedge

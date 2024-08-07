@@ -1,0 +1,13 @@
+[Unit]
+Description=Profile-sync-daemon
+Documentation=man:psd(1)
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/psd
+ExecStop=/usr/bin/psd p
+ExecReload=/usr/bin/psd e
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
