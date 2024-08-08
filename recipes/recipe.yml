@@ -23,6 +23,9 @@ modules:
        - https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-%OS_VERSION%.noarch.rpm
        - https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-%OS_VERSION%.noarch.rpm
        - https://copr.fedorainfracloud.org/coprs/atim/starship/repo/fedora-%OS_VERSION%/atim-starship-fedora-%OS_VERSION%.repo
+       - https://copr.fedorainfracloud.org/coprs/atim/xpadneo/repo/fedora-%OS_VERSION%/atim-xpadneo-%OS_VERSION%.repo
+       - https://copr.fedorainfracloud.org/coprs/ublue-os/akmods/repo/fedora-%OS_VERSION%/ublue-os-akmods-fedora-%OS_VERSION%.repo
+       - https://copr.fedorainfracloud.org/coprs/sentry/kernel-fsync-staging/repo/fedora-%OS_VERSION%/sentry-kernel-fsync-staging-fedora-%OS_VERSION%.repo
     install:
       # command line utilities
       - fish
@@ -36,6 +39,7 @@ modules:
       - rclone
       - tlp
       - tlp-rdw
+      - imagemagick
       # KVM/QEMU *********************
       - virt-install
       - libvirt-daemon-config-network
@@ -53,19 +57,20 @@ modules:
       - samba
       - freerdp
       - irqbalance
-    remove:
-      - rom-properties
-      - wallpaper-engine-kde-plugin
-      - steamdeck-dsp
-      - steamdeck-gnome-presets
-      - steamdeck-kde-presets-desktop
-      - steam_notif_daemon
-      - jupiter-fan-control
-      - jupiter-hw-support-btrfs
-      - jupiter-sd-mounting-btrfs
-      - extest
-      - ryzenadj
-      - sdgyrodsu
+      - restic
+    # remove:
+    #   - rom-properties
+    #   - wallpaper-engine-kde-plugin
+    #   - steamdeck-dsp
+    #   - steamdeck-gnome-presets
+    #   - steamdeck-kde-presets-desktop
+    #   - steam_notif_daemon
+    #   - jupiter-fan-control
+    #   - jupiter-hw-support-btrfs
+    #   - jupiter-sd-mounting-btrfs
+    #   - extest
+    #   - ryzenadj
+    #   - sdgyrodsu
 
 
   - type: default-flatpaks
@@ -82,11 +87,10 @@ modules:
         - org.remmina.Remmina
         - sh.cider.Cider
         - io.github.dvlv.boxbuddyrs #box buddy
-        - org.freedesktop.Platform.ffmpeg-full
-        - app/io.podman_desktop.PodmanDesktop/x86_64/stable
-        - app/org.videolan.VLC/x86_64/stable
-      # remove:
-      # # - org.gnome.eog
+        - io.podman_desktop.PodmanDesktop
+        - org.videolan.VLC
+        - org.gnome.DejaDup
+
 
   - type: signing # this sets up the proper policy & signing files for signed images to work fully
 
@@ -116,13 +120,10 @@ modules:
 
 
   - type: akmods
-    base: asus # if not specified, classic "main" base is used by default
+    base: fsync # if not specified, classic "main" base is used by default
     install:
-      - openrazer
       - openrgb
-      - winesync
       - xpadneo
-      - xone
 
   - type: bling
     install:
