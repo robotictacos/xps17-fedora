@@ -39,7 +39,7 @@ modules:
       - rclone
       - tlp
       - tlp-rdw
-      - imagemagick
+      - ImageMagick
       # KVM/QEMU *********************
       - virt-install
       - libvirt-daemon-config-network
@@ -65,12 +65,6 @@ modules:
     #   - steamdeck-gnome-presets
     #   - steamdeck-kde-presets-desktop
     #   - steam_notif_daemon
-    #   - jupiter-fan-control
-    #   - jupiter-hw-support-btrfs
-    #   - jupiter-sd-mounting-btrfs
-    #   - extest
-    #   - ryzenadj
-    #   - sdgyrodsu
 
 
   - type: default-flatpaks
@@ -123,28 +117,28 @@ modules:
     base: fsync # if not specified, classic "main" base is used by default
     install:
       - openrgb
-      - xpadneo
+  #     - xpadneo
 
   - type: bling
     install:
     - 1password # install 1Password (stable) and `op` CLI tool
     - dconf-update-service # a service unit that updates the dconf db on boot
-    - gnome-vrr # enables gnome-vrr for your image
+#    - gnome-vrr # enables gnome-vrr for your image
 
   - type: gnome-extensions
     install:
-      - Blur my Shell
-      - AppIndicator and KStatusNotifierItem Support
-      - Bluetooth Quick Connect
-      - Dash to Dock 
-      - Forge 
-      - Just Perfection
-      - Space Bar 
-      - System Monitor
-      - User Themes
+      - 3193 #Blur my Shell
+      - 615  #AppIndicator and KStatusNotifierItem Support
+      - 1401 #Bluetooth Quick Connect
+      - 307  #Dash to Dock 
+      - 4481 #Forge 
+      - 3843 #Just Perfection
+      - 5090 #Space Bar 
+      #- 120  #System Monitor
+      - 19   #User Themes
     uninstall:
-      - GSConnect # Uninstall step here should be used only for the extensions
-      - gnome-shell-extension-caribou-blocker
-      - gnome-shell-extension-compiz-windows-effect
-      - gnome-shell-extension-hanabi
-      - gnome-shell-extension-hotedge
+      - 1319      #GSConnect # Uninstall step here should be used only for the extensions
+    #  - 1326      #gnome-shell-extension-caribou-blocker
+      - 3210      #gnome-shell-extension-compiz-windows-effect
+    #   #- gnome-shell-extension-hanabi, can't find this
+      - 4222      #gnome-shell-extension-hotedge
